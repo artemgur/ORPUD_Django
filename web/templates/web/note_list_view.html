@@ -1,0 +1,77 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    {#    <h1>Articles</h1>#}
+    <form method="get">
+        <p>
+            <label>
+                Столбец для сортировки
+                <select name="sort_column">
+                    <option {% if sort_column == 'title' %}selected{% endif %} value="title">Название</option>
+                    <option {% if sort_column == 'time_created' %}selected{% endif %} value="time_created">Время
+                        создания
+                    </option>
+                    <option {% if sort_column == 'time_edited' %}selected{% endif %} value="time_edited">Время
+                        изменения
+                    </option>
+                </select>
+            </label>
+            <label>
+                Направление сортировки
+                <select name="sort_direction">
+                    <option {% if sort_direction == 'asc' %}selected{% endif %} value="asc">По возрастанию</option>
+                    <option {% if sort_direction == 'desc' %}selected{% endif %} value="desc">По убыванию</option>
+                </select>
+            </label>
+        </p>
+        <p>
+            <label>
+                Текст для поиска
+                <input type="text" name="search_text" value="{{ search_text }}">
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Фильтрация и сортировка">
+        </p>
+    </form>
+    <table>
+        <tr>
+            <th>Заметка</th>
+            <th>Время создания</th>
+            <th>Время изменения</th>
+            <th>Теги</th>
+        </tr>
+        {% for note in object_list %}
+            <tr>
+                <td><a href="{% url 'note' note.pk %}">{{ note.title }}</a></td>
+                <td>{{ note.time_created }}</td>
+                <td>{{ note.time_edited }}</td>
+                <td>
+                    {% if note.tags.all %}
+                        {% for tag in note.tags.all %} {{ tag.text }} {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>Пока нет заметок</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&{{ parameters }}">&laquo; в начало</a>
+                <a href="?page={{ page_obj.previous_page_number }}&{{ parameters }}">назад</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&{{ parameters }}">вперед</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&{{ parameters }}">в конец &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

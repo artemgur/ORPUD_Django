@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <link rel="stylesheet" href="{% static 'web/style.css' %}">
+</head>
+<body>
+<nav>
+    <h1 class="nav_left_div nav_h1"><a href="{% url 'main' %}">Заметки</a></h1>
+    {% if user.is_anonymous %}
+        <div class="nav_right_div">
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+            <a href="{% url 'login' %}">Войти</a>
+        </div>
+    {% else %}
+        <div class="nav_left_div">
+            <a href="{% url 'new_note' %}">Создать заметку</a>
+            <a href="{% url 'tags' %}">Редактор тегов</a>
+            <a href="{% url 'notes_analytics' %}">Аналитика</a>
+        </div>
+        <div class="nav_right_div">
+            <a href="{% url 'account' %}">Личный кабинет</a>
+            <a href="{% url 'logout' %}">Выйти</a>
+        </div>
+    {% endif %}
+    <a href="{% url 'website_analytics' %}">Статистика сайта</a>
+</nav>
+{#    <hr>#}
+{% block content %}{% endblock %}
+</body>
+</html>

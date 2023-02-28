@@ -1,0 +1,28 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <p>Количество заметок: {{ notes_count }}</p>
+    <table>
+        <tr>
+            <th>Дата создания</th>
+            <th>Количество заметок</th>
+        </tr>
+        {% for object in notes_count_by_date_created %}
+            <tr>
+                <td>{{ object.date_created }}</td>
+                <td>{{ object.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <table>
+        <tr>
+            <th>Дата изменения</th>
+            <th>Количество заметок</th>
+        </tr>
+        {% for object in notes_count_by_date_edited %}
+            <tr>
+                <td>{{ object.date_edited }}</td>
+                <td>{{ object.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

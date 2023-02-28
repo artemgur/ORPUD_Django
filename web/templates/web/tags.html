@@ -1,0 +1,15 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <ul style="list-style-type: none">
+        {% for tag in object_list %}
+            <li><a href="{% url 'tag' tag.pk %}">{{ tag.text }}</a></li>
+        {% empty %}
+            <li>Пока нет тегов</li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Создать тег">
+    </form>
+{% endblock %}

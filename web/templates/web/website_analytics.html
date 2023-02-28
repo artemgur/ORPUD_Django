@@ -1,0 +1,16 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <table>
+        <tr>
+            <th>URL</th>
+            <th>Количество посещений</th>
+        </tr>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.url }}</td>
+                <td>{{ object.visit_count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>Id в URL заменены на символ X.</p>
+{% endblock %}

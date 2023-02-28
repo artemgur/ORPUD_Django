@@ -1,0 +1,19 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить">
+    </form>
+    {#  Ignore PyCharm warning, delete_url_name intentionally doesn't have quotes as it's a variable and not a url name  #}
+    <a href="{% url delete_url_name object.pk %}">
+        <button type="button">Удалить</button>
+    </a>
+
+    {% if display_tag_hint %}
+        <p>Для выделения нескольких тегов используйте Ctrl+клик.</p>
+        <p>Для выделения нескольких идущих подряд тегов используйте Shift+клик.</p>
+        <p>Для снятия выделения с тега используйте Ctrl+клик.</p>
+    {% endif %}
+
+{% endblock %}
